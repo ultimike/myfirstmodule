@@ -3,4 +3,4 @@ description = "This is my first module ever - it's gonna be great!"
 core = 7.x
 version = 7.x-1.0
 dependencies[] = comment
-package = DCSP
+package = DrupalEasy
