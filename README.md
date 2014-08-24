@@ -1,0 +1,1 @@
+This is an example module used with DrupalEasy's Introduction to Module Development workshop for Drupal 7.x.
