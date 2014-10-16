@@ -1,23 +1,50 @@
 <?php
-
 /**
  * @file
- * My first module. It doesn't do much more than change a comment
- *  form label.
+ *
+ * Our first custom module, it modifies the default Drupal comment form.
  */
+
+/**
+ * Implements hook_form_alter().
+ */
+function myfirstmodule_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'comment_node_article_form') {
+    if (user_access('view new comment form labels')) {
+			// This updates the author title for authenticated users.
+			$form['author']['_author']['#title'] = variable_get('myfirstmodule_comment_author_label', t('Username'));
+
+			// This updates the author title for anonymous users.
+			$form['author']['name']['#title'] = variable_get('myfirstmodule_comment_author_label', t('Username'));
+		
+			// This updates the Subject label.
+			$form['subject']['#title'] = variable_get('myfirstmodule_comment_subject_label', t('Topic'));
+		}
+  }
+}
+
+/**
+ * Implements hook_permission().
+ */
+function myfirstmodule_permission() {
+  return array(
+    'view new comment form labels' => array(
+      'title' => t('View new comment form labels'),
+      'description' => t('Allow users to see the alternate comment form labels.'),
+    ),
+  );
+}
 
 /**
  * Implements hook_menu().
- *
- * Defines a path to our configuration page.
  */
 function myfirstmodule_menu() {
   $items['admin/config/user-interface/myfirstmodule'] = array(
-    'title' => 'My first module configuration',
-    'description' => 'Configuration page for the My First Module module',
+    'title' => t('My first module configuration'),
+    'description' => t('Configuration page for My first module'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('_myfirstmodule_settings'),
-    'access arguments' => array('access content'),
+    'access arguments' => array('administer site configuration'),
     'type' => MENU_NORMAL_ITEM,
   );
 
@@ -25,58 +52,45 @@ function myfirstmodule_menu() {
 }
 
 /**
- * Custom function that returns the settings page form.
+ * Custom function defining our configuration page.
+ *
+ * We begin all custom function names with an underscore so that they're
+ * not mistaken for hooks.
  */
 function _myfirstmodule_settings() {
   $form = array();
-
-  $form['myfirstmodule_author_label'] = array(
+  
+  $form['myfirstmodule_comment_author_label'] = array(
     '#type' => 'textfield',
     '#title' => t('Comment author label'),
-    '#description' => t('Enter an alternate label for the comment author field'),
-    '#default_value' => variable_get('myfirstmodule_author_label', 'Your name'),
+    '#default_value' => variable_get('myfirstmodule_comment_author_label', t('Username')),
     '#size' => 60,
     '#maxlength' => 128,
     '#required' => TRUE,
+    '#description' => t('Enter the label to use for the comment author field.'),
   );
-
-  $form['myfirstmodule_subject_label'] = array(
+  
+  $form['myfirstmodule_comment_subject_label'] = array(
     '#type' => 'textfield',
     '#title' => t('Comment subject label'),
-    '#description' => t('Enter an alternate label for the comment subject field'),
-    '#default_value' => variable_get('myfirstmodule_subject_label', 'Subject'),
+    '#default_value' => variable_get('myfirstmodule_comment_subject_label', t('Topic')),
     '#size' => 60,
     '#maxlength' => 128,
     '#required' => TRUE,
+    '#description' => t('Enter the label to use for the comment subject field.'),
   );
-
+  
   return system_settings_form($form);
+  
 }
 
-/**
- * Implements hook_form_alter().
- *
- * This updates the "username" comment form label.
- */
-function myfirstmodule_form_alter(&$form, &$form_state, $form_id) {
-  if ($form_id == 'comment_node_article_form') {
-    if (user_access('view new comment form labels')) {
-      $form['author']['_author']['#title'] = variable_get('myfirstmodule_author_label', 'Your name');
-      $form['subject']['#title'] = variable_get('myfirstmodule_subject_label', 'Topic');
-    }
-  }
-}
 
-/**
- * Implements hook_permissions().
- *
- * This defines a new permission for our module.
- */
-function myfirstmodule_permission() {
-  return array(
-    'view new comment form labels' => array(
-      'title' => t('View new comment form labels'),
-      'description' => t('Allows users to use the alternate comment for labels.'),
-    ),
-  );
-}
+
+
+
+
+
+
+
+
+

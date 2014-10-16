@@ -1,0 +1,23 @@
+<?php
+/**
+ * @file
+ *
+ * The install file for our first custom module, it modifies the 
+ * default Drupal comment form.
+ */
+
+/**
+ * Implement hook_install().
+ */
+function myfirstmodule_install() {
+  variable_set('myfirstmodule_comment_author_label', 'Full name');
+  variable_set('myfirstmodule_comment_subject_label', 'Thesis');
+}
+
+/**
+ * Implement hook_uninstall().
+ */
+function myfirstmodule_uninstall() {
+  variable_del('myfirstmodule_comment_author_label');
+  variable_del('myfirstmodule_comment_subject_label');
+}
