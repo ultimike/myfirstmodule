@@ -40,8 +40,8 @@ function myfirstmodule_permission() {
  */
 function myfirstmodule_menu() {
   $items['admin/config/user-interface/myfirstmodule'] = array(
-    'title' => t('My first module configuration'),
-    'description' => t('Configuration page for My first module'),
+    'title' => 'My first module configuration',
+    'description' => 'Configuration page for My first module',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('_myfirstmodule_settings'),
     'access arguments' => array('administer site configuration'),
@@ -59,7 +59,7 @@ function myfirstmodule_menu() {
  */
 function _myfirstmodule_settings() {
   $form = array();
-  
+
   $form['myfirstmodule_comment_author_label'] = array(
     '#type' => 'textfield',
     '#title' => t('Comment author label'),
@@ -69,7 +69,7 @@ function _myfirstmodule_settings() {
     '#required' => TRUE,
     '#description' => t('Enter the label to use for the comment author field.'),
   );
-  
+
   $form['myfirstmodule_comment_subject_label'] = array(
     '#type' => 'textfield',
     '#title' => t('Comment subject label'),
@@ -79,7 +79,7 @@ function _myfirstmodule_settings() {
     '#required' => TRUE,
     '#description' => t('Enter the label to use for the comment subject field.'),
   );
-  
+
   return system_settings_form($form);
   
 }
