@@ -11,15 +11,15 @@
 function myfirstmodule_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'comment_node_article_form') {
     if (user_access('view new comment form labels')) {
-			// This updates the author title for authenticated users.
-			$form['author']['_author']['#title'] = variable_get('myfirstmodule_comment_author_label', t('Username'));
+      // This updates the author title for authenticated users.
+      $form['author']['_author']['#title'] = variable_get('myfirstmodule_comment_author_label', t('Username'));
 
-			// This updates the author title for anonymous users.
-			$form['author']['name']['#title'] = variable_get('myfirstmodule_comment_author_label', t('Username'));
+      // This updates the author title for anonymous users.
+      $form['author']['name']['#title'] = variable_get('myfirstmodule_comment_author_label', t('Username'));
 		
-			// This updates the Subject label.
-			$form['subject']['#title'] = variable_get('myfirstmodule_comment_subject_label', t('Topic'));
-		}
+      // This updates the Subject label.
+      $form['subject']['#title'] = variable_get('myfirstmodule_comment_subject_label', t('Topic'));
+    }
   }
 }
 
